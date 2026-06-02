@@ -3,48 +3,71 @@ const portfolio = {
     {
       icon: "API",
       title: "API development",
-      description: "Designing clean REST endpoints and backend workflows with ASP.NET Core.",
+      description:
+        "Designing production-grade REST APIs and backend workflows with ASP.NET Core and .NET 8.",
     },
     {
       icon: "DB",
-      title: "Data access",
-      description: "Working with SQL databases, practical schemas, and Entity Framework Core.",
+      title: "Microservices",
+      description:
+        "Building asynchronous services for notifications, reports, and enterprise workflows.",
     },
     {
       icon: "OPS",
       title: "Reliable delivery",
-      description: "Keeping services testable, observable, and straightforward to maintain.",
+      description:
+        "Applying Clean Architecture, audit logging, caching, CI/CD, and observability.",
     },
   ],
   skills: [
-    { title: "Backend", items: ["C#", ".NET", "ASP.NET Core", "REST APIs"] },
-    { title: "Data", items: ["SQL Server", "PostgreSQL", "Entity Framework Core", "LINQ"] },
-    { title: "Tools", items: ["Git", "Docker", "Postman", "CI/CD"] },
+    {
+      title: "Backend",
+      items: ["C#", ".NET 8", "ASP.NET Core", "REST APIs", "Microservices"],
+    },
+    {
+      title: "Data",
+      items: [
+        "MySQL",
+        "MariaDB",
+        "SQL Server",
+        "Entity Framework Core",
+        "Dapper",
+        "LINQ",
+      ],
+    },
+    {
+      title: "Tools & Cloud",
+      items: ["Git", "GitHub", "Docker", "Linux", "Microsoft Azure", "CI/CD"],
+    },
+    {
+      title: "Additional",
+      items: ["C++", "Python", "JavaScript", "React.js", "Node.js", "Blazor"],
+    },
   ],
   projects: [
     {
       number: "01",
-      title: "Order Management API",
+      title: "Parking Lot Slots Detection Model",
       description:
-        "A sample REST API for managing customers, inventory, and order workflows with clear service boundaries.",
-      tags: ["ASP.NET Core", "C#", "EF Core", "SQL Server"],
-      link: "https://github.com/",
+        "A computer vision model that analyzes parking lot footage to detect available slots and their exact spatial positions.",
+      tags: ["Python", "OpenCV", "NumPy", "Matplotlib"],
+      link: "https://github.com/morehit/Projects-/tree/main/Parking_lot_Slot_detection",
     },
     {
       number: "02",
-      title: "Support Ticket Service",
+      title: "Personal Portfolio Website",
       description:
-        "A sample backend service for ticket assignment, status tracking, and audit-friendly updates.",
-      tags: ["Web API", ".NET", "PostgreSQL", "Docker"],
-      link: "https://github.com/",
+        "A responsive personal portfolio for showcasing professional experience, projects, and technical skills.",
+      tags: ["HTML", "CSS", "JavaScript", "GitHub Pages"],
+      link: "#home",
     },
     {
       number: "03",
-      title: "Developer Activity Dashboard",
+      title: "Full-Stack Blog Website",
       description:
-        "A sample dashboard API that aggregates activity data and exposes summary metrics for a small frontend.",
-      tags: ["C#", "REST API", "LINQ", "Azure"],
-      link: "https://github.com/",
+        "A responsive MERN blogging platform with public views and an admin dashboard for complete post management.",
+      tags: ["MongoDB", "Express.js", "React.js", "Node.js"],
+      link: "https://github.com/mohitpargaie",
     },
   ],
 };
@@ -101,7 +124,7 @@ featuredProjects.innerHTML = portfolio.projects
   .slice(0, 2)
   .map(
     ({ number, title, description }) => `
-      <a class="featured-project" href="#projects">
+      <a class="featured-project" href="#projects" target="_blank" rel="noreferrer">
         <div class="featured-content">
           <span class="project-number">Project ${number}</span>
           <h3>${title}</h3>
@@ -116,7 +139,7 @@ featuredProjects.innerHTML = portfolio.projects
 projectList.innerHTML = portfolio.projects
   .map(
     ({ number, title, description, tags, link }) => `
-      <a class="project-card fade-up" href="${link}" target="_blank" rel="noreferrer">
+      <a class="project-card fade-up" href="${link}"${link.startsWith("http") ? ' target="_blank" rel="noreferrer"' : ""}>
         <div class="project-topline">
           <div>
             <span class="project-number">Case study ${number}</span>
@@ -141,8 +164,12 @@ function currentRoute() {
 function renderRoute() {
   const route = currentRoute();
 
-  pages.forEach((page) => page.classList.toggle("active", page.dataset.page === route));
-  routeLinks.forEach((link) => link.classList.toggle("active", link.dataset.route === route));
+  pages.forEach((page) =>
+    page.classList.toggle("active", page.dataset.page === route),
+  );
+  routeLinks.forEach((link) =>
+    link.classList.toggle("active", link.dataset.route === route),
+  );
 
   navLinks.classList.remove("open");
   mobileMenuButton.classList.remove("open");
@@ -155,19 +182,29 @@ function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
   localStorage.setItem("portfolio-theme", theme);
   const isDark = theme === "dark";
-  themeToggle.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} mode`);
-  document.querySelector('meta[name="theme-color"]').setAttribute("content", isDark ? "#121716" : "#f7f5f0");
+  themeToggle.setAttribute(
+    "aria-label",
+    `Switch to ${isDark ? "light" : "dark"} mode`,
+  );
+  document
+    .querySelector('meta[name="theme-color"]')
+    .setAttribute("content", isDark ? "#121716" : "#f7f5f0");
 }
 
 themeToggle.addEventListener("click", () => {
-  applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+  applyTheme(
+    document.documentElement.dataset.theme === "dark" ? "light" : "dark",
+  );
 });
 
 mobileMenuButton.addEventListener("click", () => {
   const isOpen = navLinks.classList.toggle("open");
   mobileMenuButton.classList.toggle("open", isOpen);
   mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
-  mobileMenuButton.setAttribute("aria-label", `${isOpen ? "Close" : "Open"} navigation menu`);
+  mobileMenuButton.setAttribute(
+    "aria-label",
+    `${isOpen ? "Close" : "Open"} navigation menu`,
+  );
 });
 
 window.addEventListener("hashchange", renderRoute);
@@ -178,6 +215,8 @@ window.addEventListener("scroll", () => {
 document.querySelector("#current-year").textContent = new Date().getFullYear();
 
 const savedTheme = localStorage.getItem("portfolio-theme");
-const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+  ? "dark"
+  : "light";
 applyTheme(savedTheme || preferredTheme);
 renderRoute();

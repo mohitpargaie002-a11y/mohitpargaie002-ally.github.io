@@ -15,13 +15,11 @@ Then open `http://localhost:4173`.
 
 ## Personalize it
 
-Update the following before publishing:
+The portfolio is populated with Mohit's current resume details. Before publishing future updates:
 
-- Replace `Mohit`, the introduction, and timeline entries in `index.html`.
-- Replace the email address and social profile links in `index.html`.
-- Replace the sample projects in `app.js` with your real work.
-- Add a resume PDF and point the Resume link to it.
-- Update the title and social metadata in `index.html`.
+- Keep the latest resume PDF in the repository root and update its link in `index.html` if the filename changes.
+- Point each project in `app.js` to its dedicated repository when available.
+- Update experience, skills, and social metadata in `index.html` as your profile evolves.
 
 ## Deploy
 
